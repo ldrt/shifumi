@@ -1,7 +1,7 @@
 // Game settings
 const choices = ["rock", "paper", "scissors"];
 const roundsLimit = 5;
-let rounds = 0;
+let rounds;
 const scores = { "user": 0, "computer": 0 };
 
 const startBtn = document.querySelector('.startBtn');
@@ -12,6 +12,7 @@ startBtn.addEventListener('click', () => {
 let userChoice;
 const choiceBtns = document.querySelectorAll('.choiceBtn');
 choiceBtns.forEach((button) => {
+    button.setAttribute("disabled", true);
     button.addEventListener('click', () => {
         userChoice = button.innerHTML;
         rules(userPlay(), computerPlay());
@@ -83,25 +84,36 @@ function rules(playerSelection, computerSelection) {
     }
     let score = scores.user + " vs " + scores.computer;
     updateGameHMI(rounds, score, result);
-    return result;
+
+    while (rounds < roundsLimit) {
+        return;
+    }
+    if (scores.user > scores.computer) {
+        result = "Congrats ! You have won the game !";
+    } else if (scores.user < scores.computer) {
+        result = "Sorry ! You have lost the game !";
+    } else {
+        result = "The game has ended on a tie !";
+    }
+    updateGameHMI(rounds, score, result);
+    choiceBtns.forEach((button) => {
+        button.setAttribute("disabled", true);
+    });
 }
 
 function game() {
+    if (rounds === 0) {
+        return;
+    }
     if (rounds > 0) {
-        removeGameHMI()
+        removeGameHMI();
     }
+    rounds = 0;
+    scores.user = 0;
+    scores.computer = 0;
     addGameHMI();
-    /*while (rounds < roundsLimit) {
-        console.log(rules(userPlay(), computerPlay()));
-    }
-    let result = scores.user + " vs " + scores.computer + " : ";
-    if (scores.user > scores.computer) {
-        result += "Congrats ! You have won the game !";
-    } else if (scores.user < scores.computer) {
-        result += "Sorry ! You have lost the game !";
-    } else {
-        result += "The game has ended on a tie !";
-    }
-    return result;*/
+    choiceBtns.forEach((button) => {
+        button.removeAttribute("disabled");
+    });
 }
 
