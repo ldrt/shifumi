@@ -7,66 +7,15 @@
 </head>
 
 <body>
+    <div id="container">
+        <button class="startBtn">Start a new game</button>
+        <br>
+        <button class="choiceBtn">ROCK</button>
+        <button class="choiceBtn">PAPER</button>
+        <button class="choiceBtn">SCISSORS</button>
+    </div>
 
-    <script>
-        const choices = ["rock", "paper", "scissors"];
-        const roundsLimit = 5;
-        let rounds = 0;
-        const scores = { "user": 0, "computer": 0 };
-
-        function getRandomInt(max) {
-            return Math.floor(Math.random() * Math.floor(max));
-        }
-
-        function computerPlay() {
-            return choices[getRandomInt(3)];
-        }
-
-        function userPlay() {
-            userChoice = prompt();
-            if (choices.find(c => c === userChoice.toLowerCase()) === undefined) {
-                alert("You must choose between: rock, paper or scissors");
-                userPlay();
-            }
-            return userChoice;
-        }
-
-        function rules(playerSelection, computerSelection) {
-            rounds++;
-            let result = playerSelection + " vs " + computerSelection + " : ";
-            if (playerSelection.toLowerCase() === computerSelection) {
-                result += "It's a tie !";
-            } else if (
-                (playerSelection.toLowerCase() == "rock" && computerSelection == "scissors") ||
-                (playerSelection.toLowerCase() == "scissors" && computerSelection == "paper") ||
-                (playerSelection.toLowerCase() == "paper" && computerSelection == "rock")
-            ) {
-                scores.user++;
-                result += "You win !";
-            } else {
-                scores.computer++;
-                result += "You lose !";
-            }
-            return result;
-        }
-
-        function game() {
-            while (rounds < roundsLimit) {
-                console.log(rules(userPlay(), computerPlay()));
-            }
-            let result = scores.user + " vs " + scores.computer + " : ";
-            if (scores.user > scores.computer) {
-                result += "Congrats ! You have won the game !";
-            } else if (scores.user < scores.computer) {
-                result += "Sorry ! You have lost the game !";
-            } else {
-                result += "The game has ended on a tie !";
-            }
-            return result;
-        }
-
-        console.log(game());
-    </script>
+    <script type="text/javascript" src="script.js"></script>
 </body>
 
 </html>
